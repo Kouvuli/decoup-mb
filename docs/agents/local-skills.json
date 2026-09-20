@@ -1,0 +1,58 @@
+{
+  "origin": "DecoUp project-owned skills, independently adapted from upstream",
+  "createdOn": "2026-09-06",
+  "skills": [
+    {
+      "name": "decoup-mb-to-spec",
+      "installedPath": ".agents/skills/decoup-mb-to-spec/SKILL.md",
+      "invocation": "user",
+      "managedBy": "project",
+      "derivedFrom": {
+        "repository": "https://github.com/mattpocock/skills",
+        "commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+        "sourcePath": "skills/engineering/to-spec",
+        "adaptation": "Independent project-owned adaptation; upstream files remain unchanged."
+      }
+    },
+    {
+      "name": "decoup-mb-to-ticket",
+      "installedPath": ".agents/skills/decoup-mb-to-ticket/SKILL.md",
+      "invocation": "user",
+      "managedBy": "project",
+      "derivedFrom": {
+        "repository": "https://github.com/mattpocock/skills",
+        "commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+        "sourcePath": "skills/engineering/to-tickets",
+        "adaptation": "Independent project-owned adaptation; upstream files remain unchanged."
+      }
+    },
+    {
+      "name": "mono-to-microservices",
+      "installedPath": ".agents/skills/mono-to-microservices/SKILL.md",
+      "invocation": "model",
+      "managedBy": "project",
+      "livingReference": ".agents/skills/mono-to-microservices/references/project-state.md"
+    },
+    {
+      "name": "update-matt-pocock-skills",
+      "installedPath": ".agents/skills/update-matt-pocock-skills/SKILL.md",
+      "invocation": "model",
+      "managedBy": "project",
+      "adaptedFrom": "DecoUp web project-owned updater, with mobile-specific relevance rules"
+    },
+    {
+      "name": "decoup-mb-skillui",
+      "installedPath": ".agents/skills/decoup-mb-skillui/SKILL.md",
+      "invocation": "model",
+      "managedBy": "project",
+      "relatedTool": {
+        "repository": "https://github.com/amaancoderx/npxskillui",
+        "commit": "bc913a8d3503d6b2a683e4a3ac04ffe7304ac510",
+        "package": "skillui",
+        "version": "1.3.4",
+        "installed": false
+      },
+      "note": "Mobile adapter; extracted web evidence must be adapted through Impeccable and Expo rather than copied as DOM/CSS."
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "repository": "https://github.com/mattpocock/skills",
+  "commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+  "installedOn": "2026-09-07",
+  "installation": "skill-installer install-skill-from-github.py with --ref and repo-local --dest",
+  "license": ".agents/MATT_POCOCK_LICENSE",
+  "upstreamFilesModified": false,
+  "localAdditions": null,
+  "skills": [
+    {
+      "name": "setup-matt-pocock-skills",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills",
+      "installedPath": ".agents/skills/setup-matt-pocock-skills/SKILL.md"
+    },
+    {
+      "name": "ask-matt",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/ask-matt",
+      "installedPath": ".agents/skills/ask-matt/SKILL.md"
+    },
+    {
+      "name": "wayfinder",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/wayfinder",
+      "installedPath": ".agents/skills/wayfinder/SKILL.md"
+    },
+    {
+      "name": "grill-with-docs",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/grill-with-docs",
+      "installedPath": ".agents/skills/grill-with-docs/SKILL.md"
+    },
+    {
+      "name": "grilling",
+      "invocation": "model",
+      "sourcePath": "skills/productivity/grilling",
+      "installedPath": ".agents/skills/grilling/SKILL.md"
+    },
+    {
+      "name": "domain-modeling",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/domain-modeling",
+      "installedPath": ".agents/skills/domain-modeling/SKILL.md"
+    },
+    {
+      "name": "research",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/research",
+      "installedPath": ".agents/skills/research/SKILL.md"
+    },
+    {
+      "name": "prototype",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/prototype",
+      "installedPath": ".agents/skills/prototype/SKILL.md"
+    },
+    {
+      "name": "to-spec",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/to-spec",
+      "installedPath": ".agents/skills/to-spec/SKILL.md"
+    },
+    {
+      "name": "to-tickets",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/to-tickets",
+      "installedPath": ".agents/skills/to-tickets/SKILL.md"
+    },
+    {
+      "name": "implement",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/implement",
+      "installedPath": ".agents/skills/implement/SKILL.md"
+    },
+    {
+      "name": "tdd",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/tdd",
+      "installedPath": ".agents/skills/tdd/SKILL.md"
+    },
+    {
+      "name": "codebase-design",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/codebase-design",
+      "installedPath": ".agents/skills/codebase-design/SKILL.md"
+    },
+    {
+      "name": "code-review",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/code-review",
+      "installedPath": ".agents/skills/code-review/SKILL.md"
+    },
+    {
+      "name": "diagnosing-bugs",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/diagnosing-bugs",
+      "installedPath": ".agents/skills/diagnosing-bugs/SKILL.md"
+    },
+    {
+      "name": "improve-codebase-architecture",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/improve-codebase-architecture",
+      "installedPath": ".agents/skills/improve-codebase-architecture/SKILL.md"
+    },
+    {
+      "name": "resolving-merge-conflicts",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/resolving-merge-conflicts",
+      "installedPath": ".agents/skills/resolving-merge-conflicts/SKILL.md"
+    },
+    {
+      "name": "wizard",
+      "invocation": "model",
+      "sourcePath": "skills/engineering/wizard",
+      "installedPath": ".agents/skills/wizard/SKILL.md"
+    },
+    {
+      "name": "writing-for-agents",
+      "invocation": "model",
+      "sourcePath": "skills/productivity/writing-for-agents",
+      "installedPath": ".agents/skills/writing-for-agents/SKILL.md"
+    },
+    {
+      "name": "handoff",
+      "invocation": "user",
+      "sourcePath": "skills/productivity/handoff",
+      "installedPath": ".agents/skills/handoff/SKILL.md"
+    },
+    {
+      "name": "triage",
+      "invocation": "user",
+      "sourcePath": "skills/engineering/triage",
+      "installedPath": ".agents/skills/triage/SKILL.md"
+    }
+  ]
+}

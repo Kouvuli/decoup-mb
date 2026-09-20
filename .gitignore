@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+.expo/
+dist/
+coverage/
+*.tsbuildinfo
+android/
+ios/
+
+# Local discovery and unpublished drafts
+.scratch/**
+!.scratch/**/
+!.scratch/**/README.md

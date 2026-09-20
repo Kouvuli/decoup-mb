@@ -1,0 +1,16 @@
+{
+  "scope": "mobile",
+  "specRepository": "../decoup-specs",
+  "specDirectory": "specs/mobile",
+  "specViewerBaseUrl": null,
+  "specSourceBaseUrl": null,
+  "trello": {
+    "enabled": false,
+    "boardId": null,
+    "listId": null,
+    "labelIds": [],
+    "draftDirectory": ".scratch/trello",
+    "requireApprovedSpec": true,
+    "requirePublicationApproval": true
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "DecoUp",
+    "slug": "decoup-mb",
+    "version": "0.0.1",
+    "platforms": ["ios", "android"],
+    "userInterfaceStyle": "automatic"
+  }
+}
