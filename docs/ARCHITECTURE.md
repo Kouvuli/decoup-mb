@@ -4,14 +4,14 @@
 
 One React Native + Expo + TypeScript client for Android and iOS. It consumes the single decoup-be backend today; backend microservices later must not leak service topology into screens. Web/landing is separately owned by decoup-web.
 
-The source is intentionally small: index.ts registers src/app/App.tsx; the root displays a visual-language scaffold. Expo Router was described in the original research, but a routing tree is deferred until actual navigation requirements exist. No native ios/android directories, state library, API SDK, network calls or business screens are generated.
+`expo-router/entry` loads the root Stack in `src/app/_layout.tsx` with public landing, account-entry, and sign-in routes. `src/app-shell/navigation.ts` validates the supported post-authentication destinations and falls back to `/account`; feature modules do not own routing policy. T01 account access uses standard `fetch` against the configured `EXPO_PUBLIC_API_URL` Identity endpoints for phone entry, adult-confirmed creation, optional verified email, and verified-email recovery. The authoritative session remains memory-only pending T04 protected-storage work. Other domain modules remain placeholders. No native ios/android directories, state library, API SDK, durable persistence, or other authoritative business mutation exist.
 
 ## Ownership
 
-- src/app composes feature public entrypoints.
-- src/modules contains identity, marketplace, order, booking, payment, shipping, chat, notification, media and search. These are placeholders, not service boundaries or implemented flows.
+- `src/app` routes and `src/app-shell` navigation policy compose feature public entrypoints.
+- src/modules contains identity, marketplace, order, booking, payment, shipping, chat, notification, media and search. Identity owns the backend-connected account-access client, transient session, and demo capability state; the remaining modules are placeholders, not service boundaries.
 - Each module exposes index.ts and owns internal/. Peer-module imports and shell imports are forbidden.
-- src/shared contains empty contracts/api-client entrypoints and one appearance-aware theme behind ui/index.ts. src/platform reserves native adapters; neither imports domains or the shell.
+- src/shared contains empty contracts/api-client entrypoints and appearance-aware UI tokens and small shared controls behind ui/index.ts. src/platform reserves native adapters; neither imports domains or the shell.
 - No Next.js, DOM UI, backend entities, cross-repo source imports or backend business authority belongs here.
 - Share real reviewed transport contracts via versioned packages when useful, not sibling filesystem imports.
 
@@ -23,4 +23,4 @@ The living reference in .agents/skills/mono-to-microservices/references/project-
 
 ## Validation
 
-npm run check validates TypeScript and dependency direction. Expo dependency checks and Metro exports validate SDK alignment/bundling, not native builds, runtime permissions or device UX. Add feature tests only alongside actual approved behavior; no product test suite is invented for an empty app.
+`npm test` runs eight checks covering T01 authority, Identity HTTP contracts, account routes, and validated post-authentication destinations. `npm run check` validates TypeScript and dependency direction; Android and iOS Metro exports validate bundling, not native builds, runtime permissions, provider delivery, or device UX. Native-device evidence remains open.
