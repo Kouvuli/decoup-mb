@@ -1,17 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { allowedDestination, canUseSeller, tabsFor } from './demo.ts';
+import { canUseSeller, tabsFor } from './demo.ts';
 
-test('mock tabs, Seller gate, and sign-in destinations', () => {
+test('mock tabs and Seller gate', () => {
   assert.deepEqual(tabsFor('buyer', 'buyer'), ['Home', 'Explore', 'Shop', 'Services', 'Account']);
   assert.deepEqual(tabsFor('seller', 'seller'), ['Home', 'Explore', 'Add', 'Shop', 'Account']);
   for (const state of ['guest', 'pending', 'rejected', 'suspended']) {
     assert.equal(canUseSeller(state), false);
     assert.equal(tabsFor(state, 'seller')[2], 'Shop');
   }
-  assert.equal(allowedDestination('order', 'demo-order-1'), '/order/demo-order-1');
-  assert.equal(allowedDestination('chat', 'chair'), '/chat/chair');
-  assert.equal(allowedDestination('chat', 'unknown'), null);
-  assert.equal(allowedDestination('listing', 'chair'), null);
-  assert.equal(allowedDestination('order', '../chat/chair'), null);
 });

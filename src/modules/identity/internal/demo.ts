@@ -12,9 +12,3 @@ export function tabsFor(state: DemoState, workspace: Workspace) {
     ? ['Home', 'Explore', 'Add', 'Shop', 'Account']
     : ['Home', 'Explore', 'Shop', 'Services', 'Account'];
 }
-
-export function allowedDestination(kind: string, id: string): string | null {
-  if (kind === 'order' && id === 'demo-order-1') return `/order/${id}`;
-  if (kind === 'chat' && (id === 'chair' || id === 'lamp' || id === 'table')) return `/chat/${id}`;
-  return null;
-}

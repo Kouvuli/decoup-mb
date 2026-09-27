@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Action, radius, spacing, typography, useColors } from '../../../shared/ui';
-import { allowedDestination, canUseSeller, demoStates, type DemoState, type Workspace } from './demo';
+import { canUseSeller, demoStates, type DemoState, type Workspace } from './demo';
 import { createIdentityClient, type Authentication } from './identity-client';
 
 const statePresentation: Record<DemoState, { label: string; sellerStatus: string; detail: string }> = {
@@ -44,9 +44,6 @@ const DemoContext = createContext<{
   workspace: Workspace;
   setState: (state: DemoState) => void;
   setWorkspace: (workspace: Workspace) => void;
-  pendingDestination: string | null;
-  requestSignIn: (kind: string, id: string) => boolean;
-  completeSignIn: () => string | null;
   client: ReturnType<typeof createIdentityClient>;
   authentication: Authentication | null;
   authenticate: (authentication: Authentication) => void;
@@ -55,27 +52,12 @@ const DemoContext = createContext<{
 export function DemoProvider({ children }: { children: ReactNode }) {
   const [state, changeState] = useState<DemoState>('guest');
   const [workspace, changeWorkspace] = useState<Workspace>('buyer');
-  const [pendingDestination, setPendingDestination] = useState<string | null>(null);
   const [authentication, setAuthentication] = useState<Authentication | null>(null);
   const [client] = useState(() => createIdentityClient(process.env.EXPO_PUBLIC_API_URL));
   return <DemoContext.Provider value={{
     state, workspace, client, authentication,
     setState: next => { changeState(next); if (next === 'guest') setAuthentication(null); if (!canUseSeller(next)) changeWorkspace('buyer'); },
     setWorkspace: next => changeWorkspace(next === 'seller' && !canUseSeller(state) ? 'buyer' : next),
-    pendingDestination,
-    requestSignIn: (kind, id) => {
-      const destination = allowedDestination(kind, id);
-      if (!destination) return false;
-      setPendingDestination(destination);
-      return true;
-    },
-    completeSignIn: () => {
-      const destination = pendingDestination;
-      const [, kind, id] = destination?.split('/') ?? [];
-      const valid = destination ? allowedDestination(kind, id) : null;
-      setPendingDestination(null);
-      return valid;
-    },
     authenticate: next => {
       setAuthentication(next);
       changeState('buyer');
