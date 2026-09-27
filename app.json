@@ -2,8 +2,11 @@
   "expo": {
     "name": "DecoUp",
     "slug": "decoup-mb",
+    "scheme": "decoup-mb",
     "version": "0.0.1",
     "platforms": ["ios", "android"],
-    "userInterfaceStyle": "automatic"
+    "userInterfaceStyle": "automatic",
+    "experiments": { "typedRoutes": true },
+    "plugins": ["expo-router"]
   }
 }

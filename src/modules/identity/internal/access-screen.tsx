@@ -326,6 +326,7 @@ function outcomeFor(error: unknown): AccessOutcome {
   if (error.code === 'CHALLENGE_EXPIRED') return 'expired';
   if (error.code === 'CHALLENGE_REPLAYED') return 'replayed';
   if (error.code === 'TOO_MANY_ATTEMPTS') return 'rateLimited';
+  if (error.code === 'INTERRUPTED') return 'interrupted';
   if (error.code === 'OFFLINE') return 'offline';
   return 'failed';
 }

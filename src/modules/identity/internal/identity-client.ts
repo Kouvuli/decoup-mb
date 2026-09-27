@@ -46,6 +46,9 @@ export function createIdentityClient(baseUrl: string | undefined, send: Send = f
       return record(payload);
     } catch (error) {
       if (error instanceof IdentityClientError) throw error;
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw new IdentityClientError('INTERRUPTED', 'Identity request was interrupted');
+      }
       throw new IdentityClientError('OFFLINE', 'Identity service is unavailable');
     }
   };

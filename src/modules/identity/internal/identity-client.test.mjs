@@ -95,3 +95,11 @@ test('T01 returning phone verification accepts only an authoritative account ses
   const offlineClient = createIdentityClient('https://identity.example', async () => { throw new TypeError('network unavailable'); });
   await assert.rejects(() => offlineClient.requestPhoneChallenge('+84912345678'), { code: 'OFFLINE' });
 });
+
+test('T01 reports an aborted authoritative request as interrupted', async () => {
+  const client = createIdentityClient('https://identity.example', async () => {
+    throw new DOMException('request aborted', 'AbortError');
+  });
+
+  await assert.rejects(() => client.requestPhoneChallenge('+84912345678'), { code: 'INTERRUPTED' });
+});
