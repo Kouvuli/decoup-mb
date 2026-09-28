@@ -1,6 +1,57 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createIdentityClient } from './identity-client.ts';
+import { createConfiguredIdentityClient, createIdentityClient } from './identity-client.ts';
+
+test('T01 production configuration never selects the development Identity adapter', async () => {
+  const client = createConfiguredIdentityClient({ development: false, mode: 'mock' });
+
+  await assert.rejects(() => client.requestPhoneChallenge('+84912345678'), { code: 'DELIVERY_UNAVAILABLE' });
+});
+
+test('T01 development Identity adapter creates a new account without network access', async () => {
+  const client = createConfiguredIdentityClient({ development: true, mode: 'mock', scenario: 'new-account' });
+
+  const challenge = await client.requestPhoneChallenge('+84912345678');
+  const verified = await client.verifyPhoneChallenge(challenge.challengeId, '123456');
+  const authenticated = await client.createAccount(verified.token, true);
+
+  assert.equal(verified.nextStep, 'REGISTRATION_REQUIRED');
+  assert.deepEqual(authenticated, {
+    accountId: 'development-account',
+    sessionToken: 'development-session',
+    expiresAt: '2099-01-01T00:00:00.000Z',
+  });
+});
+
+test('T01 development Identity adapter returns an existing account session', async () => {
+  const client = createConfiguredIdentityClient({ development: true, mode: 'mock', scenario: 'returning-account' });
+
+  const challenge = await client.requestPhoneChallenge('+84912345678');
+  const verified = await client.verifyPhoneChallenge(challenge.challengeId, '123456');
+
+  assert.deepEqual(verified, {
+    nextStep: 'AUTHENTICATED',
+    token: 'development-session',
+    accountId: 'development-account',
+    expiresAt: '2099-01-01T00:00:00.000Z',
+  });
+});
+
+test('T01 development Identity adapter verifies optional email and replacement-phone recovery', async () => {
+  const client = createConfiguredIdentityClient({ development: true, mode: 'mock' });
+
+  const emailChallenge = await client.requestEmailVerification('development-session', 'user@example.com');
+  assert.deepEqual(await client.verifyEmail(emailChallenge.challengeId, '123456'), { accountId: 'development-account' });
+  const recoveryChallenge = await client.requestRecovery('user@example.com');
+  const recovery = await client.verifyRecoveryEmail(recoveryChallenge.challengeId, '123456');
+  const phoneChallenge = await client.requestReplacementPhone(recovery.token, '+14155550123');
+
+  assert.deepEqual(await client.completeRecovery(phoneChallenge.challengeId, '123456'), {
+    accountId: 'development-account',
+    sessionToken: 'development-recovered-session',
+    expiresAt: '2099-01-01T00:00:00.000Z',
+  });
+});
 
 test('T01 phone entry creates an account only from authoritative Identity responses', async () => {
   const requests = [];

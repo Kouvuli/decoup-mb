@@ -4,7 +4,7 @@
 
 One React Native + Expo + TypeScript client for Android and iOS. It consumes the single decoup-be backend today; backend microservices later must not leak service topology into screens. Web/landing is separately owned by decoup-web.
 
-`expo-router/entry` loads the root Stack in `src/app/_layout.tsx` with public landing, account-entry, and sign-in routes. `src/app-shell/navigation.ts` validates the supported post-authentication destinations and falls back to `/account`; feature modules do not own routing policy. T01 account access uses standard `fetch` against the configured `EXPO_PUBLIC_API_URL` Identity endpoints for phone entry, adult-confirmed creation, optional verified email, and verified-email recovery. The authoritative session remains memory-only pending T04 protected-storage work. Other domain modules remain placeholders. No native ios/android directories, state library, API SDK, durable persistence, or other authoritative business mutation exist.
+In the committed baseline, `expo-router/entry` loads the root Stack in `src/app/_layout.tsx` with public landing, account-entry, and sign-in routes. `src/app-shell/navigation.ts` validates the supported post-authentication destinations and falls back to `/account`; feature modules do not own routing policy. T01 account access uses standard `fetch` against the configured `EXPO_PUBLIC_API_URL` Identity endpoints for phone entry, adult-confirmed creation, optional verified email, and verified-email recovery. Development may explicitly select a `__DEV__`-gated adapter behind the same client seam. The authoritative session remains memory-only pending T04 protected-storage work. Other domain modules remain placeholders. No native ios/android directories, state library, API SDK, durable persistence, or other authoritative business mutation exist.
 
 ## Ownership
 
@@ -23,4 +23,4 @@ The living reference in .agents/skills/mono-to-microservices/references/project-
 
 ## Validation
 
-`npm test` runs eight checks covering T01 authority, Identity HTTP contracts, account routes, and validated post-authentication destinations. `npm run check` validates TypeScript and dependency direction; Android and iOS Metro exports validate bundling, not native builds, runtime permissions, provider delivery, or device UX. Native-device evidence remains open.
+For the committed baseline, `npm test` runs 12 checks covering T01 authority, the development and HTTP Identity clients, account routes, and validated post-authentication destinations. `npm run check` validates TypeScript and dependency direction; Android and iOS Metro exports validate bundling, not native builds, runtime permissions, provider delivery, or device UX. Native-device evidence remains open. Additional worktree checks are not committed-baseline evidence.

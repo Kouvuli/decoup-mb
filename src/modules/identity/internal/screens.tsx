@@ -2,7 +2,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Action, radius, spacing, typography, useColors } from '../../../shared/ui';
 import { canUseSeller, demoStates, type DemoState, type Workspace } from './demo';
-import { createIdentityClient, type Authentication } from './identity-client';
+import { createConfiguredIdentityClient, type Authentication } from './identity-client';
 
 const statePresentation: Record<DemoState, { label: string; sellerStatus: string; detail: string }> = {
   guest: {
@@ -44,7 +44,7 @@ const DemoContext = createContext<{
   workspace: Workspace;
   setState: (state: DemoState) => void;
   setWorkspace: (workspace: Workspace) => void;
-  client: ReturnType<typeof createIdentityClient>;
+  client: ReturnType<typeof createConfiguredIdentityClient>;
   authentication: Authentication | null;
   authenticate: (authentication: Authentication) => void;
 } | null>(null);
@@ -53,7 +53,12 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   const [state, changeState] = useState<DemoState>('guest');
   const [workspace, changeWorkspace] = useState<Workspace>('buyer');
   const [authentication, setAuthentication] = useState<Authentication | null>(null);
-  const [client] = useState(() => createIdentityClient(process.env.EXPO_PUBLIC_API_URL));
+  const [client] = useState(() => createConfiguredIdentityClient({
+    baseUrl: process.env.EXPO_PUBLIC_API_URL,
+    development: __DEV__,
+    mode: process.env.EXPO_PUBLIC_IDENTITY_MODE,
+    scenario: process.env.EXPO_PUBLIC_IDENTITY_SCENARIO,
+  }));
   return <DemoContext.Provider value={{
     state, workspace, client, authentication,
     setState: next => { changeState(next); if (next === 'guest') setAuthentication(null); if (!canUseSeller(next)) changeWorkspace('buyer'); },

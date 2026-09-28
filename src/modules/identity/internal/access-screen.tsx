@@ -2,13 +2,13 @@ import { useEffect, useRef, useState, type RefObject } from 'react';
 import { AccessibilityInfo, findNodeHandle, Pressable, Switch, Text, TextInput, View } from 'react-native';
 import { Action, Notice, radius, spacing, typography, useColors } from '../../../shared/ui';
 import { applyAccessOutcome, beginEmailSetup, beginRecovery, confirmAdult, deferEmail, initialAccessState, isChallengeCodeOutcome, submitAccountEmail, submitPhone, submitRecoveryEmail, submitReplacementPhone, type AccessOutcome, type AccessState } from './account-access';
-import { IdentityClientError, type Authentication, type createIdentityClient } from './identity-client';
+import { IdentityClientError, type Authentication, type createConfiguredIdentityClient } from './identity-client';
 
 type Mode = 'phone' | 'recovery';
 type FieldName = 'countryCode' | 'phone' | 'email' | 'code';
 type FieldError = { field: FieldName; message: string } | null;
 
-export function AccessScreen({ mode = 'phone', client, onAuthenticated, onComplete, onCancel }: { mode?: Mode; client: ReturnType<typeof createIdentityClient>; onAuthenticated: (authentication: Authentication) => void; onComplete: () => void; onCancel: () => void }) {
+export function AccessScreen({ mode = 'phone', client, onAuthenticated, onComplete, onCancel }: { mode?: Mode; client: ReturnType<typeof createConfiguredIdentityClient>; onAuthenticated: (authentication: Authentication) => void; onComplete: () => void; onCancel: () => void }) {
   const colors = useColors();
   const [state, setState] = useState<AccessState>(() => mode === 'recovery' ? beginRecovery() : initialAccessState);
   const [countryCode, setCountryCode] = useState('+84');

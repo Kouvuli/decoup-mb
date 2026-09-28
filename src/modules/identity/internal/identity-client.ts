@@ -96,6 +96,48 @@ export function createIdentityClient(baseUrl: string | undefined, send: Send = f
   };
 }
 
+export function createConfiguredIdentityClient({ baseUrl, development, mode, scenario = 'new-account' }: { baseUrl?: string; development: boolean; mode?: string; scenario?: string }) {
+  if (development && mode === 'mock') return createDevelopmentIdentityClient(scenario);
+  return createIdentityClient(baseUrl);
+}
+
+function createDevelopmentIdentityClient(scenario: string) {
+  return {
+    async requestPhoneChallenge(): Promise<Challenge> {
+      return { challengeId: 'development-phone', expiresAt: '2099-01-01T00:00:00.000Z', retryAt: '2000-01-01T00:00:00.000Z' };
+    },
+    async verifyPhoneChallenge(): Promise<PhoneVerification> {
+      if (scenario === 'returning-account') {
+        return { nextStep: 'AUTHENTICATED', token: 'development-session', accountId: 'development-account', expiresAt: '2099-01-01T00:00:00.000Z' };
+      }
+      if (scenario !== 'new-account') throw new IdentityClientError('FAILED', 'Unknown development Identity scenario');
+      return { nextStep: 'REGISTRATION_REQUIRED', token: 'development-registration', accountId: null, expiresAt: '2099-01-01T00:00:00.000Z' };
+    },
+    async createAccount(_registrationToken: string, adultConfirmed: boolean): Promise<Authentication> {
+      if (!adultConfirmed) throw new IdentityClientError('ADULT_REQUIRED', 'Adult confirmation is required');
+      return { accountId: 'development-account', sessionToken: 'development-session', expiresAt: '2099-01-01T00:00:00.000Z' };
+    },
+    async requestEmailVerification(): Promise<Challenge> {
+      return { challengeId: 'development-email', expiresAt: '2099-01-01T00:00:00.000Z', retryAt: '2000-01-01T00:00:00.000Z' };
+    },
+    async verifyEmail(): Promise<{ accountId: string }> {
+      return { accountId: 'development-account' };
+    },
+    async requestRecovery(): Promise<Challenge> {
+      return { challengeId: 'development-recovery-email', expiresAt: '2099-01-01T00:00:00.000Z', retryAt: '2000-01-01T00:00:00.000Z' };
+    },
+    async verifyRecoveryEmail(): Promise<RecoveryAuthorization> {
+      return { token: 'development-recovery', expiresAt: '2099-01-01T00:00:00.000Z' };
+    },
+    async requestReplacementPhone(): Promise<Challenge> {
+      return { challengeId: 'development-recovery-phone', expiresAt: '2099-01-01T00:00:00.000Z', retryAt: '2000-01-01T00:00:00.000Z' };
+    },
+    async completeRecovery(): Promise<Authentication> {
+      return { accountId: 'development-account', sessionToken: 'development-recovered-session', expiresAt: '2099-01-01T00:00:00.000Z' };
+    },
+  };
+}
+
 function challenge(value: Record<string, unknown>): Challenge {
   return {
     challengeId: requiredString(value.challengeId),
