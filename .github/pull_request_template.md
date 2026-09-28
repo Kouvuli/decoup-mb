@@ -1,7 +1,19 @@
-## Change
+<!-- PR title: type(scope): description -->
 
-Describe the problem and resulting behavior. Link the issue/spec when applicable.
+## Summary
+
+- Describe the problem and resulting behavior.
+
+## Issue or spec
+
+- Link:
 
 ## Validation
 
-List the checks run and any remaining limitations.
+- [ ] `npm run check`
+- [ ] `npm test`
+- [ ] Other platform or device checks:
+
+## Remaining limitations
+
+- None, or list what is intentionally deferred.

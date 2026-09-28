@@ -1,6 +1,6 @@
 # DecoUp mobile
 
-One React Native + Expo + TypeScript app for iOS and Android. Read docs/ARCHITECTURE.md, CONTEXT.md and relevant ADRs before structural changes. The initial implementation is bootstrap and empty domain boundaries only.
+One React Native + Expo + TypeScript app for iOS and Android. Read docs/ARCHITECTURE.md, CONTEXT.md and relevant ADRs before structural changes. The committed baseline contains the T01 account-access flow, Expo Router entry/account/sign-in routes, and shell-owned post-authentication navigation.
 
 ## Scope and safeguards
 
@@ -8,16 +8,16 @@ One React Native + Expo + TypeScript app for iOS and Android. Read docs/ARCHITEC
 - AGENTS.md is canonical. Never create a competing CLAUDE.md during setup.
 - Skills support an authorized task, not permission to implement features, commit, create branches, push, publish, provision accounts, configure EAS or mutate Trello.
 - Upstream automatic commit/branch actions are subordinate to these rules. Load the actual installed SKILL.md and supporting references with available tools; do not invent a Skill tool or subagents.
-- No business features, native permissions, authentication, payment/chat providers, API endpoints or schemas are implemented.
+- T01 owns account access and a local Identity HTTP client. No native permissions, durable session storage, payment/chat providers, or shared transport schema is implemented.
 - A prototype in HTML is not evidence of React Native behavior. Real native/device checks need the actual app and relevant toolchain; do not claim them from TypeScript or Metro export alone.
 
 ## Boundaries
 
-- index.ts only registers src/app/App.tsx. The app shell composes public src/modules/<domain>/index.ts entrypoints.
+- Expo Router enters through `expo-router/entry`; routes live in `src/app`, while `src/app-shell` owns shared navigation policy. Together they compose public src/modules/<domain>/index.ts entrypoints.
 - Feature modules never import peer modules or the app shell. Internal implementation stays private.
 - Shared and platform code cannot depend on domains or the app shell. Backend service topology belongs behind a client boundary, not screens.
 - Run npm run check for types and import boundaries. Navigation, shared contract packages and native integrations are added only when actual agreed features need them.
-- The Expo blank TypeScript template is the bootstrap basis; Expo Router was mentioned in research but is not needed for this single placeholder. Do not silently add a navigation system.
+- The Expo blank TypeScript template is the bootstrap basis. Add workspace tabs and destinations only for approved tickets.
 
 ## Agent skills
 
@@ -27,7 +27,7 @@ Read docs/agents/mobile-ui-skills.md and ../decoup-specs/docs/shared-brand-nativ
 
 Preserve private domain boundaries. Future theme/primitives belong behind src/shared/ui/index.ts, not competing src/theme/src/components folders from examples. Verify guidance against the installed SDK and both Android/iOS; broad Expo Go claims and iOS defaults are not universal guarantees.
 
-The three Expo skills, Impeccable and the project-owned SkillUI adapter are installed. expo-ui (required by upstream component-selection guidance), expo-router and other routing targets are absent; report the gap and propose a scoped review before that work. Do not invent instructions, silently install runtime packages, change navigation or reinitialize the app. No telemetry, feedback upload, plugin/MCP setup, EAS linking or cloud/native build is authorized by skill installation. SkillUI must use temporary `--format design-md --no-skill` output; Impeccable hooks, live bridges, pins and engine acquisition need separate authorization.
+The three Expo skills, Impeccable and the project-owned SkillUI adapter are installed. The expo-ui and expo-router skills are absent; use installed SDK documentation for scoped work and report the guidance gap. Expo Router runtime is installed for the approved T01 routes; further package, navigation or app initialization changes need task authorization. No telemetry, feedback upload, plugin/MCP setup, EAS linking or cloud/native build is authorized by skill installation. SkillUI must use temporary `--format design-md --no-skill` output; Impeccable hooks, live bridges, pins and engine acquisition need separate authorization.
 
 ### Issue tracker
 

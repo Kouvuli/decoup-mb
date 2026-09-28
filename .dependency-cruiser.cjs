@@ -13,13 +13,13 @@ module.exports = {
       name: "modules-do-not-import-app-shell",
       severity: "error",
       from: { path: "^src/modules/" },
-      to: { path: "^src/app/|^index\\.ts$" },
+      to: { path: "^src/(app|app-shell)/" },
     },
     {
       name: "shared-and-platform-do-not-import-domains-or-shell",
       severity: "error",
       from: { path: "^src/(shared|platform)/" },
-      to: { path: "^src/(modules|app)/|^index\\.ts$" },
+      to: { path: "^src/(modules|app|app-shell)/" },
     },
     {
       name: "no-sibling-repo-source",
